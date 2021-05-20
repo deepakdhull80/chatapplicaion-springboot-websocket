@@ -37,8 +37,17 @@ public class DashboardController {
 		map.addAttribute("groups", groupList);
 
 		return "dashboard";
+	
 	}
-
+	
+	/*
+	 * @Param: groupid
+	 * 
+	 * open messaging group 
+	 * 
+	 * 
+	 * */
+	
 	@GetMapping("group/{groupid}")
 	public String messagingGroup(HttpServletRequest request, @PathVariable String groupid, ModelMap map) {
 		User user = (User) request.getSession().getAttribute("user");
@@ -46,7 +55,7 @@ public class DashboardController {
 		if (user == null) {
 			return "redirect:/login";
 		}
-//		System.out.println(user);
+
 		Group gp = service.getGroupDetail(groupid, user);
 		if(gp==null) {
 			return "redirect:/";
@@ -55,6 +64,13 @@ public class DashboardController {
 		return "groupchat";
 	}
 
+	
+	/*
+	 * 
+	 * creating chat group for user.
+	 * 
+	 * */
+	
 	@PostMapping("/create-group")
 	public String createGroup(HttpServletRequest request,@ModelAttribute Group group, ModelMap map) {
 		User user = (User) request.getSession().getAttribute("user");
